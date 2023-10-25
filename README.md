@@ -1,57 +1,92 @@
-# To connect two machines running Ubuntu 22 and Windows 10 that are on the same network, you can use several methods. Here are a few options
+## Connecting two machines running Ubuntu 22 and Windows 10 on the same network
 
-+ Using SSH:
-On Ubuntu 22, you can install an SSH server, and on Windows 10, you can use an SSH client such as PuTTY to connect to the Ubuntu machine. First, you need to enable SSH on the Ubuntu machine by running the following command in the terminal:
+There are several methods to connect two machines running Ubuntu 22 and Windows 10 on the same network. Here are a few options:
 
-  $ sudo apt-get install openssh-server
+**Using SSH:**
 
-Once the installation is complete, you can find the IP address of the Ubuntu machine by running the following command:
+1. On Ubuntu 22, install an SSH server:
 
-  $ ip addr show
+    ```
+    sudo apt-get install openssh-server
+    ```
 
-Then, on Windows 10, you can use PuTTY to connect to the Ubuntu machine by entering the IP address in the "Host Name" field and selecting "SSH" as the connection type. You can then enter your Ubuntu machine's username and password to log in.
+2. On Windows 10, use an SSH client such as PuTTY to connect to the Ubuntu machine:
+    * Enter the IP address of the Ubuntu machine in the "Host Name" field.
+    * Select "SSH" as the connection type.
+    * Enter your Ubuntu machine's username and password to log in.
 
-+ Using Remote Desktop Protocol (RDP):
-On Windows 10, you can enable Remote Desktop, and on Ubuntu 22, you can install an RDP client such as Remmina. First, you need to enable Remote Desktop on the Windows 10 machine by following these steps:
+**Using Remote Desktop Protocol (RDP):**
 
-Go to "Settings" > "System" > "Remote Desktop."
-  + Turn on "Enable Remote Desktop."
-  + Make a note of the PC name under "How to connect to this PC."
-  + Next, you can install Remmina on Ubuntu 22 by running the following command in the terminal:
-  
-  $ sudo apt-get install remmina
+1. On Windows 10, enable Remote Desktop:
+    * Go to **Settings** > **System** > **Remote Desktop**.
+    * Turn on **Enable Remote Desktop**.
+    * Make a note of the PC name under **How to connect to this PC**.
 
-Once Remmina is installed, you can launch it and create a new connection by entering the Windows 10 PC's IP address or PC name, selecting "RDP" as the protocol, and entering your Windows 10 username and password.
+2. On Ubuntu 22, install an RDP client such as Remmina:
 
-+ Using Samba:
-Samba is a file-sharing protocol that allows Windows and Linux machines to share files and printers. To use Samba, you need to install it on both the Ubuntu and Windows machines. On Ubuntu 22, you can install Samba by running the following command in the terminal:
+    ```
+    sudo apt-get install remmina
+    ```
 
-  $ sudo apt-get install samba
+3. Launch Remmina and create a new connection:
+    * Enter the Windows 10 PC's IP address or PC name.
+    * Select "RDP" as the protocol.
+    * Enter your Windows 10 username and password.
 
-Once Samba is installed, you can create a shared folder on Ubuntu by running the following commands:
+**Using Samba:**
 
-  $ sudo mkdir /home/<your_username>/shared_folder
-  $ sudo chown <your_username>:<your_username> /home/<your_username>/shared_folder
-  $ sudo chmod 777 /home/<your_username>/shared_folder
-  
-Replace <your_username> with your Ubuntu machine's username. You can then add the shared folder to Samba's configuration file by running the following command:  
-  $ sudo nano /etc/samba/smb.conf
+1. On both the Ubuntu and Windows machines, install Samba:
 
-Add the following lines at the bottom of the file:
+    * On Ubuntu 22:
 
-[shared_folder]
-path = /home/<your_username>/shared_folder
-read only = no
-guest ok = yes
+        ```
+        sudo apt-get install samba
+        ```
 
-Save and exit the file, and then restart Samba by running the following command:
+    * On Windows 10: Download and install Samba from the official website.
 
-  $ sudo systemctl restart smbd
+2. On Ubuntu, create a shared folder:
+
+    ```
+    sudo mkdir /home/<your_username>/shared_folder
+    sudo chown <your_username>:<your_username> /home/<your_username>/shared_folder
+    sudo chmod 777 /home/<your_username>/shared_folder
+    ```
+
+    Replace `<your_username>` with your Ubuntu machine's username.
+
+3. On Ubuntu, add the shared folder to Samba's configuration file:
+
+    ```
+    sudo nano /etc/samba/smb.conf
+    ```
+
+    Add the following lines at the bottom of the file:
+
+    ```
+    [shared_folder]
+    path = /home/<your_username>/shared_folder
+    read only = no
+    guest ok = yes
+    ```
+
+    Save and exit the file.
+
+4. On Ubuntu, restart Samba:
+
+    ```
+    sudo systemctl restart smbd
+    
+
+5. On Windows 10, access the shared folder:
+    * Open File Explorer.
+    * Click "Network" in the left-hand pane.
+    * Locate the Ubuntu machine and double-click on it to open it.
+    * Double-click on the "shared_folder" to access its contents.
+
+These are just a few ways to connect two machines running Ubuntu 22 and Windows 10 on the same network. The choice of method depends on your specific requirements and preferences.
 
 
-On Windows 10, you can access the shared folder by opening File Explorer, clicking "Network" in the left-hand pane, and locating the Ubuntu machine. Double-click on the Ubuntu machine to open it, and then double-click on the "shared_folder" to access its contents.
-
-These are some ways to connect two machines running Ubuntu 22 and Windows 10 that are on the same network. The choice of method depends on your specific requirements and preferences.
 
 
 
